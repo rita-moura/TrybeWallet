@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { saveEmail } from '../redux/actions';
+import { userEmail } from '../redux/actions';
 
 const MIN_LENGTH = 5;
 
@@ -34,7 +34,7 @@ class Login extends React.Component {
     event.preventDefault();
     const { dispatch, history } = this.props;
     const { email } = this.state;
-    dispatch(saveEmail(email));
+    dispatch(userEmail(email));
     history.push('/carteira');
   };
 
