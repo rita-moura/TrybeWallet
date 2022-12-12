@@ -2,6 +2,7 @@ export const USER_EMAIL = 'USER_EMAIL';
 export const WALLET_DATA = 'WALLET_DATA';
 export const WALLET_SUCESS = 'WALLET_SUCESS';
 export const WALLET_ERRO = 'WALLET_ERRO';
+export const EXPENSES_INFO = 'EXPENSES_INFO';
 
 export function userEmail(payload) {
   return {
@@ -20,6 +21,13 @@ export function walletInfo(currency) {
   return {
     type: WALLET_SUCESS,
     payload: Object.keys(currency),
+  };
+}
+
+export function expensesInfo(data) {
+  return {
+    type: EXPENSES_INFO,
+    payload: data,
   };
 }
 

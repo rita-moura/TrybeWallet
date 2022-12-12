@@ -7,9 +7,11 @@ class Header extends Component {
     const { email } = this.props;
     return (
       <section>
-        <h3 data-testid="email-field">{`Usuário: ${email}`}</h3>
-        <p data-testid="total-field">Valor: 0</p>
-        <p data-testid="header-currency-field">Moeda: BRL</p>
+        <div>
+          <h3 data-testid="email-field">{`Usuário: ${email}`}</h3>
+          <p data-testid="total-field">Despesa Total: R$ 0,00</p>
+        </div>
+        <p data-testid="header-currency-field">Moeda atual: BRL</p>
       </section>
     );
   }
