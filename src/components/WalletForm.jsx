@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import Prop from 'prop-types';
 import { connect } from 'react-redux';
-import { walletFetch } from '../redux/actions';
+import { walletFetch, walletFetchExpense } from '../redux/actions';
 
 class WalletForm extends Component {
   constructor() {
     super();
 
     this.state = {
-      value: '0,00',
+      value: '0',
       description: '',
+      currency: 'USD',
+      method: 'dinheiro',
+      tag: 'alimentação',
     };
   }
 
@@ -20,20 +23,27 @@ class WalletForm extends Component {
 
   handleChange = ({ target }) => {
     const { name, value } = target;
-    this.setState({
+    this.setState((prevState) => ({
+      ...prevState,
       [name]: value,
-    });
+    }));
   };
 
   handleClick = (event) => {
     event.preventDefault();
     const { dispatch } = this.props;
-    // const {  } = this.state;
-    dispatch(action(this.state));
+    dispatch(walletFetchExpense(this.state));
+    this.setState({
+      value: '',
+      description: '',
+      currency: '',
+      method: '',
+      tag: '',
+    });
   };
 
   render() {
-    const { value, description } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     const { currencies } = this.props;
 
     return (
@@ -62,24 +72,39 @@ class WalletForm extends Component {
           />
         </label>
 
-        <select data-testid="currency-input">
-          {currencies.map((currency) => (
-            <option key={ currency } value="currency">{ currency }</option>
+        <select
+          data-testid="currency-input"
+          onChange={ this.handleChange }
+          value={ currency }
+          name="currency"
+        >
+          {currencies.map((coin) => (
+            <option key={ coin } value={ coin }>{ coin }</option>
           ))}
         </select>
 
-        <select data-testid="method-input">
-          <option value="dinheiro">Dinheiro</option>
-          <option value="credito">Cartão de crédito</option>
-          <option value="debito">Cartão de débito</option>
+        <select
+          data-testid="method-input"
+          onChange={ this.handleChange }
+          value={ method }
+          name="method"
+        >
+          <option value="Dinheiro">Dinheiro</option>
+          <option value="Cartão de crédito">Cartão de crédito</option>
+          <option value="Cartão de débito">Cartão de débito</option>
         </select>
 
-        <select data-testid="tag-input">
-          <option value="alimentação">Alimentação</option>
-          <option value="lazer">Lazer</option>
-          <option value="trabalho">Trabalho</option>
-          <option value="transporte">Transporte</option>
-          <option value="saúde">Saúde</option>
+        <select
+          data-testid="tag-input"
+          onChange={ this.handleChange }
+          value={ tag }
+          name="tag"
+        >
+          <option value="Alimentação">Alimentação</option>
+          <option value="Lazer">Lazer</option>
+          <option value="Trabalho">Trabalho</option>
+          <option value="Transporte">Transporte</option>
+          <option value="Saúde">Saúde</option>
         </select>
 
         <button

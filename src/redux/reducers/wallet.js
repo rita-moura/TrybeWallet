@@ -1,12 +1,25 @@
-import { WALLET_DATA, WALLET_ERRO, WALLET_SUCESS } from '../actions';
+import {
+  SUM_CURRENCY,
+  WALLET_DATA,
+  WALLET_EXPENSES_INFO,
+  WALLET_SUCESS,
+} from '../actions';
 
-// Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 const INITIAL_STATE = {
-  currencies: [], // array de string
-  expenses: [], // array de objetos, com cada objeto tendo as chaves id, value, currency, method, tag, description e exchangeRates
-  editor: false, // valor booleano que indica de uma despesa está sendo editada
-  idToEdit: 0, // valor numérico que armazena o id da despesa que esta sendo editada,
-  isLoading: false,
+  currencies: [],
+  expenses: [],
+  editor: false,
+  idToEdit: 0,
+  sumTotal: 0,
+};
+
+const reducer = (state) => {
+  const { expenses } = state;
+  const sum = expenses.reduce((acc, curr) => {
+    const cotação = curr.exchangeRates[curr.currency].ask * curr.value;
+    return cotação + acc;
+  }, 0);
+  return sum;
 };
 
 function wallet(state = INITIAL_STATE, action) {
@@ -14,19 +27,28 @@ function wallet(state = INITIAL_STATE, action) {
   case WALLET_DATA:
     return {
       ...state,
-      isLoading: true,
     };
   case WALLET_SUCESS:
     return {
       ...state,
       currencies: action.payload,
-      isLoading: false,
     };
-  case WALLET_ERRO:
+  case WALLET_EXPENSES_INFO:
     return {
       ...state,
-      erro,
-      isLoading: false,
+      expenses: [
+        ...state.expenses,
+        {
+          ...action.payload.info,
+          id: action.payload.id,
+          exchangeRates: action.payload.data,
+        },
+      ],
+    };
+  case SUM_CURRENCY:
+    return {
+      ...state,
+      sumTotal: reducer(state),
     };
   default:
     return state;

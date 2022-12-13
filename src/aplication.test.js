@@ -18,19 +18,10 @@ describe('Testa a página de login', () => {
     expect(passwordElement).toBeInTheDocument();
   });
   test('Testa se o botão de entrar funciona corretamente', () => {
-    // const { history } = renderWithRouterAndRedux(<App />);
-    // const email = 'email@email.com';
-    // const password = '123456';
-
     renderWithRouterAndRedux(<Login />);
     const button = screen.getByRole('button', {
       name: /entrar/i,
     });
-    // userEvent.type(email);
-    // userEvent.type(password);
-    // userEvent.click(button);
-    // const { pathname } = history.location;
-    // expect(pathname).toBe('/carteira');
     expect(button).toBeInTheDocument();
   });
 });
@@ -42,9 +33,6 @@ describe('Testa a página Wallet', () => {
     const emailUser = screen.getByTestId('email-field');
     expect(emailUser).toBeInTheDocument();
 
-    const text = screen.getByText(/despesa total: r\$ 0,00/i);
-    expect(text).toBeInTheDocument();
-
     const coin = screen.getByText(/moeda atual: brl/i);
     expect(coin).toBeInTheDocument();
   });
@@ -55,11 +43,28 @@ describe('Testa a página Wallet', () => {
     const inputValue = screen.getByRole('textbox', {
       name: /valor:/i,
     });
-    expect(inputValue).toBeInTheDocument();
-
     const inputDescription = screen.getByRole('textbox', {
       name: /descrição:/i,
     });
+    const currencyInput = screen.getByRole('columnheader', {
+      name: /câmbio utilizado/i,
+    });
+    const buttonAdd = screen.getByRole('button', {
+      name: /adicionar despesa/i,
+    });
+
+    expect(inputValue).toBeInTheDocument();
     expect(inputDescription).toBeInTheDocument();
+    expect(currencyInput).toBeInTheDocument();
+    expect(buttonAdd).toBeInTheDocument();
+  });
+  test('Testa se as informações estão corretas', () => {
+    renderWithRouterAndRedux(<Wallet />);
+
+    const table = screen.getByRole('columnheader', {
+      name: /descrição/i,
+    });
+
+    expect(table).toBeInTheDocument();
   });
 });
