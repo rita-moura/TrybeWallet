@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import Prop from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { walletFetch, walletFetchExpense } from '../redux/actions';
+import {
+  editExpense, sumCurrencies, walletFetch, walletFetchExpense } from '../redux/actions';
 
 class WalletForm extends Component {
   constructor() {
     super();
 
     this.state = {
-      value: '0',
+      value: '',
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
@@ -31,21 +32,26 @@ class WalletForm extends Component {
 
   handleClick = (event) => {
     event.preventDefault();
-    const { dispatch } = this.props;
-    dispatch(walletFetchExpense(this.state));
+    const { dispatch, editor } = this.props;
 
+    if (editor) {
+      dispatch(editExpense(this.state));
+      dispatch(sumCurrencies());
+    } else {
+      dispatch(walletFetchExpense(this.state));
+    }
     this.setState({
       value: '',
       description: '',
       currency: 'USD',
-      method: '',
-      tag: '',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     });
   };
 
   render() {
     const { value, description, currency, method, tag } = this.state;
-    const { currencies } = this.props;
+    const { currencies, editor } = this.props;
 
     return (
       <form onSubmit={ this.handleClick }>
@@ -112,18 +118,19 @@ class WalletForm extends Component {
           type="submit"
           onClick={ this.handleClick }
         >
-          Adicionar despesa
-
+          {
+            editor ? 'Editar despesa' : 'Adicionar despesa'
+          }
         </button>
-
       </form>
     );
   }
 }
 
 WalletForm.propTypes = {
-  currencies: Prop.string,
-  dispatch: Prop.func,
+  currencies: PropTypes.string,
+  dispatch: PropTypes.func,
+  editor: PropTypes.bool,
 }.isRequired;
 
 const mapStateToProps = (state) => ({

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteExpenses, sumCurrencies } from '../redux/actions';
+import { deleteExpenses, startEdit, sumCurrencies } from '../redux/actions';
 
 const convertedValue = (value) => {
   const converted = +value.exchangeRates[value.currency].ask * +value.value;
@@ -9,8 +9,9 @@ const convertedValue = (value) => {
 };
 
 class Table extends Component {
-  handleClick = (event) => {
-    event.preventDefault();
+  handleEdit = (id) => {
+    const { dispatch } = this.props;
+    dispatch(startEdit(id));
   };
 
   handleDelete = (expenses, id) => {
@@ -46,14 +47,18 @@ class Table extends Component {
                 <td>{expense.method}</td>
                 <td>{Number(expense.value).toFixed(2)}</td>
                 <td>{expense.currency}</td>
-                <td>{Number(expense.exchangeRates[expense.currency].ask).toFixed(2)}</td>
+                <td>
+                  {Number(expense.exchangeRates[expense.currency]
+                    .ask).toFixed(2)}
+
+                </td>
                 <td>{convertedValue(expense)}</td>
                 <td>{expense.exchangeRates[expense.currency].name}</td>
                 <td>
                   <button
                     type="submit"
                     data-testid="edit-btn"
-                    onClick={ this.handleClick }
+                    onClick={ () => this.handleEdit(expense.id) }
                   >
                     Editar
 

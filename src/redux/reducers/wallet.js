@@ -1,5 +1,7 @@
 import {
   DELETE_EXPENSES,
+  EDIT_EXPENSE,
+  START_EDIT,
   SUM_CURRENCY,
   WALLET_DATA,
   WALLET_EXPENSES_INFO,
@@ -21,6 +23,17 @@ const reducer = (state) => {
     return cotação + acc;
   }, 0);
   return sum;
+};
+
+const edit = (state, input) => {
+  const { expenses } = state;
+  const index = expenses.findIndex((element) => element.id === state.idToEdit);
+  expenses[index].value = input.value;
+  expenses[index].description = input.description;
+  expenses[index].currency = input.currency;
+  expenses[index].method = input.method;
+  expenses[index].tag = input.tag;
+  return expenses;
 };
 
 function wallet(state = INITIAL_STATE, action) {
@@ -55,6 +68,20 @@ function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       expenses: action.payload,
+    };
+  case START_EDIT:
+    return {
+      ...state,
+      editor: true,
+      idToEdit: action.payload,
+    };
+  case EDIT_EXPENSE:
+    return {
+      ...state,
+      expenses: [
+        ...edit(state, action.payload),
+      ],
+      editor: false,
     };
   default:
     return state;

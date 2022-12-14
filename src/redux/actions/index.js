@@ -6,6 +6,8 @@ export const WALLET_EXPENSES_INFO = 'WALLET_EXPENSES_INFO';
 export const WALLET_EXPENSES = 'WALLET_EXPENSES';
 export const SUM_CURRENCY = 'SUM_CURRENCY';
 export const DELETE_EXPENSES = 'DELETE_EXPENSES';
+export const START_EDIT = 'START_EDIT';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
 
 export function userEmail(payload) {
   return {
@@ -37,6 +39,20 @@ export function deleteExpenses(expenses, id) {
   return {
     type: DELETE_EXPENSES,
     payload: expenses.filter((expense) => expense.id !== id),
+  };
+}
+
+export function startEdit(id) {
+  return {
+    type: START_EDIT,
+    payload: id,
+  };
+}
+
+export function editExpense(input) {
+  return {
+    type: EDIT_EXPENSE,
+    payload: input,
   };
 }
 
