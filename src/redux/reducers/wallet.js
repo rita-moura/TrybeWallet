@@ -1,4 +1,5 @@
 import {
+  DELETE_EXPENSES,
   SUM_CURRENCY,
   WALLET_DATA,
   WALLET_EXPENSES_INFO,
@@ -49,6 +50,11 @@ function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       sumTotal: reducer(state),
+    };
+  case DELETE_EXPENSES:
+    return {
+      ...state,
+      expenses: action.payload,
     };
   default:
     return state;

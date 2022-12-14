@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { deleteExpenses, sumCurrencies } from '../redux/actions';
 
 const convertedValue = (value) => {
   const converted = +value.exchangeRates[value.currency].ask * +value.value;
@@ -8,9 +9,19 @@ const convertedValue = (value) => {
 };
 
 class Table extends Component {
+  handleClick = (event) => {
+    event.preventDefault();
+  };
+
+  handleDelete = (expenses, id) => {
+    const { dispatch } = this.props;
+    dispatch(deleteExpenses(expenses, id));
+    dispatch(sumCurrencies());
+  };
+
   render() {
     const { expenses } = this.props;
-    console.log(expenses);
+
     return (
       <table width="100%" border="1">
         <thead>
@@ -39,8 +50,22 @@ class Table extends Component {
                 <td>{convertedValue(expense)}</td>
                 <td>{expense.exchangeRates[expense.currency].name}</td>
                 <td>
-                  <button type="button">Editar</button>
-                  <button type="button">Excluir</button>
+                  <button
+                    type="submit"
+                    data-testid="edit-btn"
+                    onClick={ this.handleClick }
+                  >
+                    Editar
+
+                  </button>
+                  <button
+                    type="submit"
+                    data-testid="delete-btn"
+                    onClick={ () => this.handleDelete(expenses, expense.id) }
+                  >
+                    Excluir
+
+                  </button>
                 </td>
               </tr>
             ))

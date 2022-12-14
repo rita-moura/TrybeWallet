@@ -5,6 +5,7 @@ export const WALLET_ERRO = 'WALLET_ERRO';
 export const WALLET_EXPENSES_INFO = 'WALLET_EXPENSES_INFO';
 export const WALLET_EXPENSES = 'WALLET_EXPENSES';
 export const SUM_CURRENCY = 'SUM_CURRENCY';
+export const DELETE_EXPENSES = 'DELETE_EXPENSES';
 
 export function userEmail(payload) {
   return {
@@ -32,6 +33,13 @@ export function sumCurrencies() {
   };
 }
 
+export function deleteExpenses(expenses, id) {
+  return {
+    type: DELETE_EXPENSES,
+    payload: expenses.filter((expense) => expense.id !== id),
+  };
+}
+
 export function walletFetch() {
   return async (dispatch) => {
     dispatch(walletData());
@@ -48,7 +56,6 @@ export function walletFetchExpense(info) {
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
     const data = await response.json();
     delete data.USDT;
-    console.log(data);
     dispatch({
       type: WALLET_EXPENSES_INFO,
       payload: {

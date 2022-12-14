@@ -1,9 +1,8 @@
 import React from 'react';
-// import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
-import { renderWithRouterAndRedux } from './tests/helpers/renderWith';
+import userEvent from '@testing-library/user-event';
+import { renderWithRedux, renderWithRouterAndRedux } from './tests/helpers/renderWith';
 import Login from './pages/Login';
-// import App from './App';
 import Wallet from './pages/Wallet';
 
 describe('Testa a página de login', () => {
@@ -12,16 +11,18 @@ describe('Testa a página de login', () => {
     const emailElement = screen.getByRole('textbox', {
       name: /email:/i,
     });
-    expect(emailElement).toBeInTheDocument();
-
     const passwordElement = screen.getByLabelText(/senha:/i);
+
+    expect(emailElement).toBeInTheDocument();
     expect(passwordElement).toBeInTheDocument();
   });
   test('Testa se o botão de entrar funciona corretamente', () => {
-    renderWithRouterAndRedux(<Login />);
+    renderWithRedux(<Login />);
     const button = screen.getByRole('button', {
       name: /entrar/i,
     });
+    userEvent.click(button);
+
     expect(button).toBeInTheDocument();
   });
 });
@@ -31,9 +32,9 @@ describe('Testa a página Wallet', () => {
     renderWithRouterAndRedux(<Wallet />);
 
     const emailUser = screen.getByTestId('email-field');
-    expect(emailUser).toBeInTheDocument();
+    const coin = screen.getByText(/brl/i);
 
-    const coin = screen.getByText(/moeda atual: brl/i);
+    expect(emailUser).toBeInTheDocument();
     expect(coin).toBeInTheDocument();
   });
 

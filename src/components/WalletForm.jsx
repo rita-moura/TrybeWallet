@@ -33,7 +33,6 @@ class WalletForm extends Component {
     event.preventDefault();
     const { dispatch } = this.props;
     dispatch(walletFetchExpense(this.state));
-    // console.log(dispatch(walletFetchExpense(this.state)));
 
     this.setState({
       value: '',
