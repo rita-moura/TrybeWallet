@@ -32,45 +32,31 @@ export function sumCurrencies() {
   };
 }
 
-export function walleError(error) {
-  return {
-    type: WALLET_ERRO,
-    error,
-  };
-}
-
 export function walletFetch() {
   return async (dispatch) => {
-    try {
-      dispatch(walletData());
-      const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-      const data = await response.json();
-      delete data.USDT;
-      dispatch(walletCurrencies(data));
-    } catch (error) {
-      dispatch(walleError(error));
-    }
+    dispatch(walletData());
+    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const data = await response.json();
+    delete data.USDT;
+    dispatch(walletCurrencies(data));
   };
 }
 
 export function walletFetchExpense(info) {
   return async (dispatch, getState) => {
-    try {
-      dispatch(walletData());
-      const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-      const data = await response.json();
-      delete data.USDT;
-      dispatch({
-        type: WALLET_EXPENSES_INFO,
-        payload: {
-          id: getState().wallet.expenses.length,
-          info,
-          data,
-        },
-      });
-      dispatch(sumCurrencies());
-    } catch (error) {
-      dispatch(walleError(error));
-    }
+    dispatch(walletData());
+    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const data = await response.json();
+    delete data.USDT;
+    console.log(data);
+    dispatch({
+      type: WALLET_EXPENSES_INFO,
+      payload: {
+        id: getState().wallet.expenses.length,
+        info,
+        data,
+      },
+    });
+    dispatch(sumCurrencies());
   };
 }

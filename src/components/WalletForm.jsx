@@ -11,8 +11,8 @@ class WalletForm extends Component {
       value: '0',
       description: '',
       currency: 'USD',
-      method: 'dinheiro',
-      tag: 'alimentação',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
   }
 
@@ -33,10 +33,12 @@ class WalletForm extends Component {
     event.preventDefault();
     const { dispatch } = this.props;
     dispatch(walletFetchExpense(this.state));
+    // console.log(dispatch(walletFetchExpense(this.state)));
+
     this.setState({
       value: '',
       description: '',
-      currency: '',
+      currency: 'USD',
       method: '',
       tag: '',
     });
