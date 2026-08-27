@@ -1,13 +1,39 @@
-# :construction: README customizado em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto no qual você pode customizar e reutilizar todas as vezes que for executar o trybe-publisher.
+# TrybeWallet
 
-Para deixá-lo com a sua cara, basta alterar o seguinte arquivo da sua máquina: ~/.student-repo-publisher/custom/_NEW_README.md
+Carteira de despesas em React e Redux, com conversão de moedas e gerenciamento de lançamentos.
 
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+## Funcionalidades e aprendizados
+
+- Carteira de despesas em React e Redux
+- Código organizado para estudo e evolução
+- Prática das tecnologias utilizadas no repositório
+
+## Tecnologias
+
+- JavaScript
+- React
+- Redux
+- Cypress
+
+## Como executar
+
+```bash
+git clone https://github.com/rita-moura/TrybeWallet.git
+cd TrybeWallet
+npm install
+npm start
+```
+
+### Comandos úteis
+
+- `npm test`: executa os testes.
+- `npm run build`: gera a versão de produção.
+- `npm run lint`: verifica a qualidade do código.
+
+## Contexto
+
+Projeto desenvolvido durante a formação da [Trybe](https://www.betrybe.com/) para consolidar conhecimentos por meio de uma atividade prática.
+
+## Autoria
+
+Desenvolvido por [Rita Moura](https://github.com/rita-moura).
